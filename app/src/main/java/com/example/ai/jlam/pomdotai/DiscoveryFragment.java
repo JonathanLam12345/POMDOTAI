@@ -69,82 +69,42 @@ public class DiscoveryFragment extends AppCompatActivity implements TextToSpeech
         setContentView(R.layout.discovery_fragment);
         Log.d("bot :", "onCreateView");
 
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         userInfoDatabase = new UserInfoDatabase(this);
+        userInfoDatabase.setProfileImageURL("iVBORw0KGgoAAAANSUhEUgAAAJAAAACQCAQAAABNTyozAAAEQUlEQVR4Aeza34tUZRzH8bczs7m7kQWZN1prq1HGXnQRRomBFtZC5Va0WhsYIZVaai2YoVEWZNEviDJb2n6wpnddSVkJsdtio/tLrKydCircMmVJK1t33Zlvf8B5njM/nj2cM+d8X+/rgeED5xke5qCUUkoppZRSKqHms47dDDHKBBOMMsRu1jIPRZo2soilLG2kSbBmckiRcjSTSPW8h5RYJ3UkzCwGkTIaYFay5hlGyiyXnInqGUQqqJ86EqETqbAOEqAZcWgZMZcmhzj0A2lirQ1x7D5i7WvEsQPE2HwE9xqJrXUI7j1CbO1BcG8XsXUYcY8BYmsUcY+TxNYE4h7jxJZMUS50IB2ooAPpQE7ldSAdyKlJAqQD6UA60DkdSAdyakIH0oH0Nq8DhTjQWQKkA+lAOtCYDqQDOfWfDqQDOXVGB9KBnPqXAOlAOpAO9I8OpAM59bcOpAM5dVoH0oGcOqUD6UBJGSiPeFoY+Eucf2K3KFr/5Y8hnm4K/DXgHHbN0br9n0A8tWA3hODefuxaEU9/EJqjiKfV2H2E4N6b2K1FPH1LaL5APL2K3RoE91Zg9wbiaR+h6UA8fYpdI+LcOWZitx/x9Dah2Yh4OoafXsSxvfg5jnh6lNAsQQxdid1KxLFbsWtCDN1IaC5gEvH0GHYpvkccOoifduMjWU+IBso8heBmh3nyLIQyT6AsoXoR8TTJbPzsRCrsJfw0kEc8PU+oFiGGtuKnlkNIBX1JBj/bEEPXEappjCCefqUGPzM5ipTZYS7Ez3SOGb9J6F5GDK2BIhMdRMqoh4vwtx4x9AKhuwoxNEId/mrZgZRUgdepwd/5HDd+8goi4HPE0HMUt7SER+0Iiyv8sRA+IRKWWa4E11Bcila+QowV6OZuplHctUwihpYQEVnE0BDTKc1cHqaLfk4yzjgn6KeLh2igNLUcQQz1EhlLEWPvEzzoQowtJkL2IsY2ELR2xNjHREojY4ihPG0EaRV5xNAZGoiYTYixSe4lKPdb5hEeJ3LSHLBOtJEgPGGdp5sUETSXvxBL71DDVDqPTsTSKHOIqNsoIJb6WMBUaWIQsZTnFiJsM2JtjHYyuKphE2cRa+1E3E7Ep2GW4+IufkR8eovIS7EH8S1LK2nKlWElhxDfdpGiCmSKTiT8wjMsoFRNbOM3pOg8aapEig6khL7hFZZzMTaXcCev8R1SQjtIUVW2UkBKbIRu3mU7W1jPBrawnU56+B0psTxPUoVaOI0EH6e4nSo1jz4k4LJcThXL8CwTSECN8zRpql4TvUgA9XA1sbGCn5Ep7CfuIWYyrCaHuMcwD5IhllK08BkFpMIK7OMOUsTcZTzFQNnT9LGZS0mQOTzAh+SKDjPMB6xiNok1gxsQS9czAwWIJaUD/d8OHQgBAAAwEJo/9Tz+CiFBggQJEiSoSZAgQYIECRIkCEGCBAEAAAAA7LO/WXmh52/cAAAAAElFTkSuQmCC");
+        userInfoDatabase.setFirst_name("Jonathan");
+        userInfoDatabase.setLast_name("Lam");
 
         soceroID = userInfoDatabase.getSocero_ID();
         fullName = userInfoDatabase.getFirst_name() + " " + userInfoDatabase.getLast_name();
         email = userInfoDatabase.getEmail();
         greetingTime = timeOfTheDay();
 
-    }
+        Log.d("bot :", "onCreate");
 
-    public static String timeOfTheDay() {
-        final Calendar c = Calendar.getInstance();
-/*
-* 6:00am to 11:59am - morning
-* 12:00pm to 17:59 - afternoon
-* 18:01 to 5:59 - evening*/
-        if (c.get(Calendar.HOUR_OF_DAY) >= 6 && c.get(Calendar.HOUR_OF_DAY) <= 11) {
-            return "Good morning!";
-        } else if (c.get(Calendar.HOUR_OF_DAY) >= 12 && c.get(Calendar.HOUR_OF_DAY) <= 17) {
-            return "Good afternoon!";
-        } else {
-            return "Good evening!";
-        }
-    }
-
-
-    public static void botIntro() {
-        clearList();
-        speak(greetingTime + "My name is POM. Your Personal Opportunity Manager. Would you like some event recommendations for today?");
-        updateList(new RowItem("POM", greetingTime + " My name is POM. Your Personal Opportunity Manager. Would you like some event recommendations for today?"));
-        POMBot.wantRecommendations = true;
-    }
-
-    public static void speak(String s) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                tts.setPitch((float) 1.0);
-                tts.setSpeechRate((float) 1.0);
-                tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
-            }
-        }, 100);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        Log.d("bot :", "onViewCreated");
-        this.context = getContext();
-        super.onViewCreated(view, savedInstanceState);
-
-        bot = new POMBot(context, baroServiceProvider);
-        editText_input = view.findViewById(R.id.editText_input);
-        listView_list = view.findViewById(R.id.list);
+        bot = new POMBot(this);
+        editText_input = findViewById(R.id.editText_input);
+        listView_list = findViewById(R.id.list);
         listView_list.setClickable(true);
 
-        imageView_send_button = view.findViewById(R.id.send_button);
-        imageView_speak = view.findViewById(R.id.btSpeak);
-        tts = new TextToSpeech(getContext(), this);
+        imageView_send_button = findViewById(R.id.send_button);
+        imageView_speak = findViewById(R.id.btSpeak);
+        tts = new TextToSpeech(this, this);
 
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         checkVoiceRecognition();
 
         arrayList = new ArrayList<RowItem>();
 
-        mAdapter = new MyCustomAdapter(context, arrayList);
+        mAdapter = new MyCustomAdapter(this, arrayList);
         listView_list.setAdapter(mAdapter);
         botIntro();
-
 
         listView_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (POMBot.clickableList) {
-
                 }
             }
         });
@@ -198,10 +158,43 @@ public class DiscoveryFragment extends AppCompatActivity implements TextToSpeech
                     editText_input.setText("");
 
                     sendMessageToBot(message);
-
                 }
             }
         });
+    }
+
+    public static String timeOfTheDay() {
+        final Calendar c = Calendar.getInstance();
+/*
+* 6:00am to 11:59am - morning
+* 12:00pm to 17:59 - afternoon
+* 18:01 to 5:59 - evening*/
+        if (c.get(Calendar.HOUR_OF_DAY) >= 6 && c.get(Calendar.HOUR_OF_DAY) <= 11) {
+            return "Good morning!";
+        } else if (c.get(Calendar.HOUR_OF_DAY) >= 12 && c.get(Calendar.HOUR_OF_DAY) <= 17) {
+            return "Good afternoon!";
+        } else {
+            return "Good evening!";
+        }
+    }
+
+
+    public static void botIntro() {
+        clearList();
+        speak(greetingTime + "");
+        updateList(new RowItem("POM", greetingTime + ""));
+
+    }
+
+    public static void speak(final String s) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tts.setPitch((float) 1.0);
+                tts.setSpeechRate((float) 1.0);
+                tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        }, 100);
     }
 
 
@@ -274,43 +267,23 @@ public class DiscoveryFragment extends AppCompatActivity implements TextToSpeech
     public static void postData() {
         //message and bot reply should be the most updated.
 
-        Log.d("post data", "");
-        String fullUrl = "https://docs.google.com/forms/d/e/1FAIpQLSex_yAMaQ5RRylY5QlW_wM38SQwhE1cbRYlop0u3wHgmt5p1A/formResponse";
-        HttpRequest mReq = new HttpRequest();
-
-        String data = "entry.197557228=" + URLEncoder.encode(DiscoveryFragment.soceroID) + "&" +
-                "entry.1749078208=" + URLEncoder.encode(DiscoveryFragment.fullName) + "&" +
-                "entry.1269961482=" + URLEncoder.encode(DiscoveryFragment.email) + "&" +
-                "entry.235803520=" + URLEncoder.encode(DiscoveryFragment.message) + "&" +
-                "entry.687241897=" + URLEncoder.encode(DiscoveryFragment.botReply);
-
-        mReq.sendPost(fullUrl, data);
+//        Log.d("post data", "");
+//        String fullUrl = "https://docs.google.com/forms/d/e/1FAIpQLSex_yAMaQ5RRylY5QlW_wM38SQwhE1cbRYlop0u3wHgmt5p1A/formResponse";
+//        HttpRequest mReq = new HttpRequest();
+//
+//        String data = "entry.197557228=" + URLEncoder.encode(DiscoveryFragment.soceroID) + "&" +
+//                "entry.1749078208=" + URLEncoder.encode(DiscoveryFragment.fullName) + "&" +
+//                "entry.1269961482=" + URLEncoder.encode(DiscoveryFragment.email) + "&" +
+//                "entry.235803520=" + URLEncoder.encode(DiscoveryFragment.message) + "&" +
+//                "entry.687241897=" + URLEncoder.encode(DiscoveryFragment.botReply);
+//
+//        mReq.sendPost(fullUrl, data);
     }
 
 
     //get message from user(by input text/speech) and process it with a bot response.
     public void sendMessageToBot(String message) {
-        String botMessage = bot.getBotMessage(message);
-        if (POMBot.goToProfile) {
-            POMBot.goToProfile = false;
-            Log.d("DiscoveryFragment: ", " Going to Profile page. (Not implemented yet)");
-
-
-            Bundle bundle = new Bundle();
-            bundle.putString("USER_ID", userInfoDatabase.getUser_ID());
-            bundle.putString("YOUR_USER_ID", userInfoDatabase.getUser_ID());
-
-            ProfileFragment profileFragment = new ProfileFragment();
-            profileFragment.setArguments(bundle);
-
-            getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right).add(R.id.frame, profileFragment).addToBackStack(null).commit();
-            getActivity().getSupportFragmentManager().executePendingTransactions();
-        } else if (POMBot.goToChat) {
-            POMBot.goToChat = false;
-            getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right).add(R.id.frame, new Chat()).addToBackStack(null).commit();
-            getActivity().getSupportFragmentManager().executePendingTransactions();
-        }
-
+        final String botMessage = bot.getBotMessage(message);
 
         if (botMessage != null) {
             new Handler().postDelayed(new Runnable() {
@@ -326,18 +299,18 @@ public class DiscoveryFragment extends AppCompatActivity implements TextToSpeech
 
     public void checkVoiceRecognition() {
         // Check if voice recognition is present
-        PackageManager pm = context.getPackageManager();
+        PackageManager pm = this.getPackageManager();
         List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(
                 RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
         if (activities.size() == 0) {
             imageView_speak.setEnabled(false);
-            Toast.makeText(context, "Voice recognizer not present", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Voice recognizer not present", Toast.LENGTH_SHORT).show();
         }
     }
 
 
     void showToastMessage(String message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -351,6 +324,14 @@ public class DiscoveryFragment extends AppCompatActivity implements TextToSpeech
     public void onStart() {
         super.onStart();
     }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        tts.shutdown();
+    }
+
 
     @Override
     public void onResume() {

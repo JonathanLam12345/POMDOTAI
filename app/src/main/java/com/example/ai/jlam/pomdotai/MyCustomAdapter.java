@@ -14,10 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.team.socero.soceroapp.Database.MessagingDatabase;
-import com.team.socero.soceroapp.Database.UserInfoDatabase;
-import com.team.socero.soceroapp.Discovery.Bot.RowItem;
-import com.team.socero.soceroapp.R;
+
 
 import java.util.List;
 
@@ -28,7 +25,7 @@ public class MyCustomAdapter extends BaseAdapter
     private List<RowItem> RowItems;
     private LayoutInflater mLayoutInflater;
     UserInfoDatabase userInfoDatabase;
-    MessagingDatabase messagingDatabase;
+
     Context context;
 
     public MyCustomAdapter(Context context, List<RowItem> arrayList)
@@ -71,7 +68,7 @@ public class MyCustomAdapter extends BaseAdapter
     {
         ViewHolder holder = null;
         userInfoDatabase = new UserInfoDatabase(this.context);
-        messagingDatabase = new MessagingDatabase(this.context);
+
 
         // check to see if the reused view is null or not, if is not null then
         // reuse it
@@ -117,146 +114,7 @@ public class MyCustomAdapter extends BaseAdapter
                 holder.imageView_displayPic.setImageBitmap(decodedByte); //display the image.
             }
         }
-        //This means the type is the user ID. This is for 1 to 1 messaging.
 
-        else if (RowItem.getImageType().equals("1"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_artsnculture);
-        }
-        else if (RowItem.getImageType().equals("2"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_careernbusiness);
-        }
-        else if (RowItem.getImageType().equals("3"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_carsnmotors);
-        }
-        else if (RowItem.getImageType().equals("4"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_cmntynenviro);
-        }
-        else if (RowItem.getImageType().equals("5"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_dancing);
-        }
-        else if (RowItem.getImageType().equals("6"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_education);
-        }
-        else if (RowItem.getImageType().equals("7"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_fashionnpretty);
-        }
-        else if (RowItem.getImageType().equals("8"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_fitness);
-        }
-        else if (RowItem.getImageType().equals("9"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_food);
-        }
-        else if (RowItem.getImageType().equals("10"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_games);
-        }
-        else if (RowItem.getImageType().equals("11"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_lgbt);
-        }
-        else if (RowItem.getImageType().equals("12"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_movenpolitics);
-        }
-        else if (RowItem.getImageType().equals("13"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_healthnbeing);
-        }
-        else if (RowItem.getImageType().equals("14"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_hobbies);
-        }
-        else if (RowItem.getImageType().equals("15"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_language);
-        }
-        else if (RowItem.getImageType().equals("16"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_lifestyle);
-        }
-        else if (RowItem.getImageType().equals("17"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_bookclubs);
-        }
-        else if (RowItem.getImageType().equals("18"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_moviesnfilm);
-        }
-        else if (RowItem.getImageType().equals("19"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_music);
-        }
-        else if (RowItem.getImageType().equals("20"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_newage);
-        }
-        else if (RowItem.getImageType().equals("21"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_outside);
-        }
-        else if (RowItem.getImageType().equals("22"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_paranormal);
-        }
-        else if (RowItem.getImageType().equals("23"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_parentsnfam);
-        }
-        else if (RowItem.getImageType().equals("24"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_pets);
-        }
-        else if (RowItem.getImageType().equals("25"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_photo);
-        }
-        else if (RowItem.getImageType().equals("26"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_religion);
-        }
-        else if (RowItem.getImageType().equals("27"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_scifi);
-        }
-        else if (RowItem.getImageType().equals("28"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_singles);
-        }
-        else if (RowItem.getImageType().equals("29"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_social);
-        }
-        else if (RowItem.getImageType().equals("30"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_sports);
-        }
-        else if (RowItem.getImageType().equals("31"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_support);
-        }
-        else if (RowItem.getImageType().equals("32"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_tech);
-        }
-        else if (RowItem.getImageType().equals("33"))
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.interests_writing);
-        }
-
-
-        else
-        {
-            holder.imageView_displayPic.setImageResource(R.mipmap.bot_user);
-        }
 
         // this method must return the view corresponding to the data at the
         // specified position.
